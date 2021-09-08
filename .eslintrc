@@ -32,6 +32,7 @@
     "react/no-array-index-key": "error",
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "radix": ["error", "as-needed"],
+    "no-underscore-dangle": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/naming-convention": [
       "error",

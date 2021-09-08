@@ -2,13 +2,15 @@ import { ViaplaySeriesPage } from "types/ViaplayApi"
 import { API_URL, SITE_URL } from "../constants"
 
 /**
- * @returns Promisified HTTP Response
+ * @param controller AbortController
+ * @returns Promisified HTTP Response for the ViaplaySeriesPage
  * @description Fetches the Viaplay API Endpoint for series
  * @fires window.fetch
  * @emits O(1)
  */
-export const fetchViaplayApi = async () => {
-  const controller = new AbortController()
+export const fetchViaplayApi = async (
+  controller: AbortController,
+): Promise<ViaplaySeriesPage> => {
   const config: RequestInit = {
     method: "GET",
     signal: controller.signal,
@@ -19,9 +21,9 @@ export const fetchViaplayApi = async () => {
       if (response.status === 401) {
         // refresh the page for the user
         window.location.assign(SITE_URL)
-        return Promise.reject({
-          message: "Could not reach the server, please try again later.",
-        })
+        return Promise.reject(
+          new Error("Could not reach the server, please try again later."),
+        )
       }
 
       const data: ViaplaySeriesPage = await response.json()
