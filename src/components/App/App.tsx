@@ -1,11 +1,14 @@
 /* eslint-disable */
-import { useLayoutEffect, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import { ViaplaySeriesPage } from "types/ViaplayApi"
 import { fetchViaplayApi } from "utils/fetchViaplayApi"
 
 export const App = () => {
   const [data, setData] = useState<ViaplaySeriesPage>()
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(50)
+  const lastPage = useRef(-1)
+  console.log(lastPage)
+
   useLayoutEffect(() => {
     console.log("RELOADING:", page)
     const controller = new AbortController()
@@ -13,6 +16,9 @@ export const App = () => {
     const getData = async () => {
       const viaplayData = await fetchViaplayApi(controller, page)
       setData(viaplayData)
+      if (lastPage.current === -1) {
+        lastPage.current = viaplayData._embedded["viaplay:blocks"][0].pageCount
+      }
     }
     getData()
 
@@ -22,10 +28,14 @@ export const App = () => {
   }, [page])
 
   const next = (): void => {
-    setPage((prev) => (prev += 1))
+    setPage((prev) =>
+      prev !== lastPage.current && lastPage.current !== -1 ? (prev += 1) : 1,
+    )
   }
   const prev = (): void => {
-    setPage((prev) => (prev -= 1))
+    setPage((prev) =>
+      prev !== 1 && lastPage.current !== -1 ? (prev -= 1) : lastPage.current,
+    )
   }
 
   return (
