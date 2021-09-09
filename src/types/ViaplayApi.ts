@@ -5,9 +5,7 @@ export interface ViaplaySeriesPage {
   title: string
   description: string
   styles: string[]
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: Links
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   _embedded: EmbeddedBlocks
   responseCode: ResponseCode
 }
@@ -33,9 +31,7 @@ export interface ViaplayBlock {
   currentPage: number
   pageCount: number
   productsPerPage: number
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   _embedded: EmbeddedProducts
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: BlockLinkedListLinks
 }
 
@@ -56,7 +52,6 @@ export interface ViaplayProducts {
   content: Content
   user: User
   system: System
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: PageLinks
   notice: Notice
 }
@@ -64,7 +59,6 @@ export interface ViaplayProducts {
 export interface Notice {
   message: string
   code: number
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: AccountLinks
 }
 

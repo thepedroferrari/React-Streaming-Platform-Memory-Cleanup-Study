@@ -47,7 +47,8 @@
       {
         "selector": "variable",
         "modifiers": ["const"],
-        "format": ["camelCase", "UPPER_CASE"]
+        "format": ["camelCase", "UPPER_CASE"],
+        "leadingUnderscore": "allow"
       },
       {
         "selector": "variable",
@@ -85,11 +86,13 @@
       },
       {
         "selector": "typeLike",
-        "format": ["PascalCase"]
+        "format": ["PascalCase"],
+        "leadingUnderscore": "allow"
       },
       {
         "selector": "property",
-        "format": ["camelCase"]
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
       }
     ]
   }

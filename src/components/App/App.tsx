@@ -1,16 +1,13 @@
-/* eslint-disable */
 import { useLayoutEffect, useRef, useState } from "react"
 import { ViaplaySeriesPage } from "types/ViaplayApi"
 import { fetchViaplayApi } from "utils/fetchViaplayApi"
 
 export const App = () => {
   const [data, setData] = useState<ViaplaySeriesPage>()
-  const [page, setPage] = useState(50)
+  const [page, setPage] = useState(1)
   const lastPage = useRef(-1)
-  console.log(lastPage)
 
   useLayoutEffect(() => {
-    console.log("RELOADING:", page)
     const controller = new AbortController()
 
     const getData = async () => {
@@ -27,14 +24,18 @@ export const App = () => {
     }
   }, [page])
 
-  const next = (): void => {
-    setPage((prev) =>
-      prev !== lastPage.current && lastPage.current !== -1 ? (prev += 1) : 1,
+  const next = () =>
+    setPage((prevState) =>
+      prevState !== lastPage.current && lastPage.current !== -1
+        ? prevState + 1
+        : 1,
     )
-  }
-  const prev = (): void => {
-    setPage((prev) =>
-      prev !== 1 && lastPage.current !== -1 ? (prev -= 1) : lastPage.current,
+
+  const prev = () => {
+    setPage((prevState) =>
+      prevState !== 1 && lastPage.current !== -1
+        ? prevState - 1
+        : lastPage.current,
     )
   }
 
@@ -80,7 +81,7 @@ export const App = () => {
                         )}
                       </div>
                       <div>
-                        Images: <img src={images.boxart.url} alt="Box Image" />
+                        Images: <img src={images.boxart.url} alt="Box Poster" />
                       </div>
                       <div>IMDB: {imdb?.rating}</div>
                     </li>
