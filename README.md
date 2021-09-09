@@ -1,3 +1,27 @@
+# How to run this project
+In order for this project to run you will need besides of the barebones:
+- Node
+- Yarn
+- Edit your local hosts file (with sudo permission). Add `127.0.0.1 viaplay.se`. Usually it can be found under `/etc/hosts/` or in windows is usually at `C:\Windows\System32\drivers\etc\hosts`. This will point out https://viaplay.se to localhost and allow us to freely use the API without extra authentication.
+- Caddy Server: Web Server with automatic ssl certificates. Find your personal download flavour at https://caddyserver.com/docs/install. My personal preference in a Mac is `brew install caddy`.
+- This projects files (please clone this repo)
+
+Once you have all that you need to start the caddy server, then run the react-scripts, and then we can checkout the project at https://viaplay.se
+on the projects folder:
+1. caddy run
+2. yarn start
+3. open https://viaplay.se
+
+## Can I completely ignore editing the hosts file and Caddy?
+Yes, although the API provided does not allow CORS for localhost, you may still run the site at https://localhost:3000 while disabling CORS via browser extension.
+- Chrome: https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en-US
+- Firefox: https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/
+
+## Is it possible to run without any of that?
+Possibly, are there access tokens we can improve our fetching so we can request the API from localhost? If you know better than I do please edit the fetch config at `/src/utils/fetchViaplayApi.ts`.
+
+---
+
 # Rich Data and Schema Markup Case Study
 This project intends to analyse Rich Metadata and Schema Markup on *Viaplay* website. The project will be prototyped using React.
 The focus will be on a reasonable ui and data-structure, rather than other features.
