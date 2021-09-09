@@ -135,7 +135,7 @@ export interface Content {
   parentalRating: string
   series: Series
   synopsis: string
-  imdb: Imdb
+  imdb?: Imdb
   production: Production
   originalTitle?: string
 }
@@ -170,9 +170,9 @@ export interface Svod {
 }
 
 export interface People {
-  actors: string[]
+  actors?: string[]
   directors?: string[]
-  participants: string[]
+  participants?: string[]
 }
 
 export interface Images {
