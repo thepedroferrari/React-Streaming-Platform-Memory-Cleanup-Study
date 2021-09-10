@@ -2,15 +2,15 @@
 In order for this project to run you will need besides of the barebones:
 - Node
 - Yarn
-- Edit your local hosts file (with sudo permission). Add `127.0.0.1 viaplay.se`. Usually it can be found under `/etc/hosts/` or in windows is usually at `C:\Windows\System32\drivers\etc\hosts`. This will point out https://viaplay.se to localhost and allow us to freely use the API without extra authentication.
+- Edit your local hosts file (with sudo permission). Add `127.0.0.1 stage.viaplay.se`. Usually it can be found under `/etc/hosts/` or in windows is usually at `C:\Windows\System32\drivers\etc\hosts`. This will point out https://stage.viaplay.se to localhost and allow us to freely use the API without extra authentication.
 - Caddy Server: Web Server with automatic ssl certificates. Find your personal download flavour at https://caddyserver.com/docs/install. My personal preference in a Mac is `brew install caddy`.
 - This projects files (please clone this repo)
 
-Once you have all that you need to start the caddy server, then run the react-scripts, and then we can checkout the project at https://viaplay.se
+Once you have all that you need to start the caddy server, then run the react-scripts, and then we can checkout the project at https://stage.viaplay.se
 on the projects folder:
 1. caddy run
 2. yarn start
-3. open https://viaplay.se
+3. open https://stage.viaplay.se
 
 ## Can I completely ignore editing the hosts file and Caddy?
 Yes, although the API provided does not allow CORS for localhost, you may still run the site at https://localhost:3000 while disabling CORS via browser extension.
