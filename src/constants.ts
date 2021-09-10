@@ -4,7 +4,6 @@ import { ViaplayCategoryTitle } from "types/ViaplayApi"
 export const API_URL = "https://content.viaplay.se/pc-se/serier"
 export const SITE_URL = "http://localhost:3000"
 export const CATEGORIES: ViaplayCategoryTitle[] = [
-  "viaplay-originals",
   "samtliga",
   "action",
   "animation",
@@ -30,4 +29,5 @@ export const CATEGORIES: ViaplayCategoryTitle[] = [
   "internationella-serier",
   "national-geographic",
   "starzplay",
+  "viaplay-originals",
 ]

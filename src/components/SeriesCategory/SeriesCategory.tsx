@@ -1,6 +1,6 @@
 import { usePagination } from "hooks"
 import { useLayoutEffect, useState } from "react"
-import InView, { useInView } from "react-intersection-observer"
+import InView from "react-intersection-observer"
 import { ViaplayCategoryTitle, ViaplaySeriesPage } from "types/ViaplayApi"
 import { fetchViaplayApi } from "utils/fetchViaplayApi"
 
@@ -11,7 +11,6 @@ export const SeriesCategory = ({ category }: Props) => {
   const { lastPage, next, page, prev } = usePagination()
   const [data, setData] = useState<ViaplaySeriesPage>()
   const [isVisible, setIsVisible] = useState(false)
-  const { ref } = useInView()
 
   useLayoutEffect(() => {
     if (!isVisible) return undefined
@@ -33,42 +32,54 @@ export const SeriesCategory = ({ category }: Props) => {
 
   return (
     <InView
-      as="div"
+      as="section"
       onChange={(inView, entry) => {
         console.log("Inview:", category, inView, entry)
         setIsVisible(inView)
       }}>
-      <section ref={ref}>
-        <h1>{category}</h1>
-        <button type="button" onClick={prev} value="PREV">
-          PREV
-        </button>
-        <button type="button" onClick={next} value="NEXT">
-          NEXT
-        </button>
-        {data?._embedded["viaplay:blocks"].map((b) => {
-          const { title, _embedded } = b
-          return (
-            <section>
-              <header>
-                <h2>{title}</h2>
-                <ul style={{ display: "flex" }}>
-                  {_embedded &&
-                    _embedded["viaplay:products"]?.map((product) => {
-                      const {
-                        content: {
-                          originalTitle,
-                          people,
-                          images,
-                          imdb,
-                          series,
-                          synopsis,
-                        },
-                      } = product
-
-                      return (
-                        <li>
-                          <img src={images.boxart.url} alt="Box Poster" />
+      <h1>{category}</h1>
+      <button type="button" onClick={prev} value="PREV">
+        PREV
+      </button>
+      <button type="button" onClick={next} value="NEXT">
+        NEXT
+      </button>
+      {data?._embedded["viaplay:blocks"].map((b) => {
+        const { title, _embedded } = b
+        return (
+          <section>
+            <header>
+              <h2>{title}</h2>
+              <ul
+                style={{
+                  display: "flex",
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                }}>
+                {_embedded &&
+                  _embedded["viaplay:products"]?.map((product) => {
+                    const {
+                      content: {
+                        originalTitle,
+                        people,
+                        images,
+                        imdb,
+                        series,
+                        synopsis,
+                      },
+                    } = product
+                    console.log(images)
+                    return (
+                      <li
+                        style={{
+                          display: "flex",
+                          listStyle: "none",
+                          margin: 0,
+                          padding: 0,
+                        }}>
+                        <img src={images.landscape.url} alt="Box Poster" />
+                        <div style={{ display: "none" }}>
                           <div>Title: {originalTitle}</div>
                           <div>Series: {series.title}</div>
                           <div>
@@ -81,15 +92,15 @@ export const SeriesCategory = ({ category }: Props) => {
                             )}
                           </div>
                           <div>IMDB: {imdb?.rating}</div>
-                        </li>
-                      )
-                    })}
-                </ul>
-              </header>
-            </section>
-          )
-        })}
-      </section>
+                        </div>
+                      </li>
+                    )
+                  })}
+              </ul>
+            </header>
+          </section>
+        )
+      })}
     </InView>
   )
 }
