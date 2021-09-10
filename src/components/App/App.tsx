@@ -5,7 +5,7 @@ export const App = () => {
   return (
     <div>
       {CATEGORIES.map((category) => (
-        <SeriesCategory category={category} />
+        <SeriesCategory key={category} category={category} />
       ))}
     </div>
   )
