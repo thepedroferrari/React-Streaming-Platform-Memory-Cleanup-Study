@@ -238,8 +238,36 @@ export interface ViaplaySorting {
   active?: boolean
 }
 
+export type ViaplayCategoryTitle =
+  | "samtliga"
+  | "action"
+  | "animation"
+  | "barnserier"
+  | "dokumentarserier"
+  | "drama"
+  | "komedi"
+  | "kriminaldrama"
+  | "livsstil"
+  | "matlagning"
+  | "reality"
+  | "science-fiction"
+  | "sportdokumentarer"
+  | "sportmagasin"
+  | "thriller"
+  | "true-crime"
+  | "underhallning"
+  | "ungdomsserier"
+  | "alla-sasonger"
+  | "abc-studios"
+  | "chicago-serierna"
+  | "fox"
+  | "internationella-serier"
+  | "national-geographic"
+  | "starzplay"
+  | "viaplay-originals"
+
 export interface ViaplayCategoryFilter {
-  title: string
+  title: ViaplayCategoryTitle
   href: string
   templated: boolean
   tagId: string
