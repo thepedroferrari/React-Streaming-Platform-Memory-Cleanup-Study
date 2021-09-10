@@ -1,8 +1,9 @@
-import { ViaplaySeriesPage } from "types/ViaplayApi"
+import { ViaplayCategoryTitle, ViaplaySeriesPage } from "types/ViaplayApi"
 import { API_URL, SITE_URL } from "../constants"
 
 /**
  * @param controller AbortController
+ * @param category ViaplayCategoryTitle
  * @param page number
  * @returns Promisified HTTP Response for the ViaplaySeriesPage
  * @description Fetches the Viaplay API Endpoint for series
@@ -11,6 +12,7 @@ import { API_URL, SITE_URL } from "../constants"
  */
 export const fetchViaplayApi = async (
   controller: AbortController,
+  category: ViaplayCategoryTitle,
   page = 1,
 ): Promise<ViaplaySeriesPage> => {
   const config: RequestInit = {
@@ -20,7 +22,7 @@ export const fetchViaplayApi = async (
 
   try {
     return await window
-      .fetch(`${API_URL}?pageNumber=${page}`, config)
+      .fetch(`${API_URL}/${category}?pageNumber=${page}`, config)
       .then(async (response) => {
         if (response.status === 401) {
           // refresh the page for the user
