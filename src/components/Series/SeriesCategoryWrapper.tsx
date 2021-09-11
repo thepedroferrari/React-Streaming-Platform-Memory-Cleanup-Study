@@ -8,6 +8,23 @@ import { SeriesCategory } from "./molecules/SeriesCategory"
 interface Props {
   category: ViaplayCategoryTitle
 }
+
+/**
+ * @param Props
+ * @returns JSX.Element || null
+ * @description The wrapper is responsible for organising the logic necessary
+ * to its children. Some methods/functions may be passed down or contextualised.
+ * Renders the first block of data if available, otherwise returns null.
+ * In case we don't know how many blocks are there and we want to render them 
+ * all, we should consider it as O(n2). Category is similar but not equal to
+ * Genre
+ * @fires usePagination
+ * @fires useLayoutEffect 
+ * @fires useState 
+ * @fires fetchViaplayApi
+ * @emits O(n)
+
+ */
 export const SeriesCategoryWrapper = ({ category }: Props) => {
   const { lastPage, next, page, prev } = usePagination()
   const [data, setData] = useState<ViaplaySeriesPage>()
@@ -32,6 +49,9 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
     }
   }, [isVisible, page, category, lastPage])
 
+  if (!data || data._embedded["viaplay:blocks"].length === 0) return null
+  const block = data._embedded["viaplay:blocks"][0]
+
   return (
     <InView
       as="section"
@@ -39,21 +59,19 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
         console.log("Inview:", category, inView, entry)
         setIsVisible(inView)
       }}>
-      <h1>{category}</h1>
+      <h2>{category}</h2>
       <button type="button" onClick={prev} value="PREV">
         PREV
       </button>
       <button type="button" onClick={next} value="NEXT">
         NEXT
       </button>
-      {data?._embedded["viaplay:blocks"].map((b) => (
-        <SeriesCategory
-          setIsLastInPage={setIsLastInPage}
-          title={b.title}
-          embedded={b._embedded}
-          key={b.title}
-        />
-      ))}
+      <SeriesCategory
+        setIsLastInPage={setIsLastInPage}
+        title={block.title}
+        embedded={block._embedded}
+        key={block.title}
+      />
     </InView>
   )
 }

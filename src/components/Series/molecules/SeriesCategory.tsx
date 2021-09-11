@@ -51,31 +51,15 @@ export const SeriesCategory = ({ title, embedded, setIsLastInPage }: Props) => {
 
               return isUseful ? (
                 <InView
-                  as="li"
                   key={publicPath}
                   onChange={(inView2, entry2) => {
                     console.log("LAST IN PAGE:", title, inView2, entry2)
                     setIsLastInPage(inView2)
-                  }}
-                  style={{
-                    display: "grid",
-                    listStyle: "none",
-                    margin: 0,
-                    padding: 0,
                   }}>
                   <SerieCard content={content} />
                 </InView>
               ) : (
-                <li
-                  key={publicPath}
-                  style={{
-                    display: "grid",
-                    listStyle: "none",
-                    margin: 0,
-                    padding: 0,
-                  }}>
-                  <SerieCard content={content} />
-                </li>
+                <SerieCard key={publicPath} content={content} />
               )
             })}
         </SerieGrid>
