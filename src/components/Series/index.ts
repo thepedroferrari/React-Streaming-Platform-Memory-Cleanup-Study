@@ -1,1 +1,1 @@
-export { SeriesWrapper } from "./SeriesWrapper"
+export { SeriesCategoryWrapper } from "./SeriesCategoryWrapper"
