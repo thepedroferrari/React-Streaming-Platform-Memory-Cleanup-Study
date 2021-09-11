@@ -13,6 +13,7 @@ import { useRef, useState } from "react"
 export const usePagination = () => {
   const [page, setPage] = useState(1)
   const lastPage = useRef(-1)
+  const nextPageUrl = useRef<string | null>(null)
 
   const next = () =>
     setPage((prevState) =>
@@ -32,5 +33,5 @@ export const usePagination = () => {
     lastPage.current = pageCount
   }
 
-  return { lastPage, next, page, prev, updateLastPage }
+  return { nextPageUrl, lastPage, next, page, prev, updateLastPage }
 }
