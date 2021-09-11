@@ -1,20 +1,19 @@
 :root {
   /* Variables */
   /* -Colours- */
-  --white: #fff;
-  --light: #f9f9f9;
-  --black: #002845;
-  --bg: radial-gradient(#96ddcc, #6accb9);
+  --white: #eee;
+  --light: #e7e7e7;
+  --black: #1d1d27;
   --grey: #999;
-  --dark: #002845;
-  --green: #0a7e85;
+  --dark: #2b2b35;
+  --green: #15a615;
   --light-green: #eefbf7;
   --dark-green: #01454b;
 
+  /* Colour Tokens */
+  --text-primary: var(--white);
+  --bg: var(--black);
   --color-cta: var(--light-green);
-  --color-ok: #eefbf7;
-  --color-warning: #ffe9c8;
-  --color-fail: #f5b1c1;
 
   /* Type */
   --text-font-family: "Montserrat", sans-serif;
@@ -41,8 +40,9 @@
   --base-size-x8: calc(var(--base-size) * 8);
   --base-size-x10: calc(var(--base-size) * 10);
   --smallText: 0.8em;
+
   /* Elevation */
-  --box-shadow: 0 0 10px 2px rgba(0, 25, 40, 0.4);
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   --level-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --level-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -65,6 +65,11 @@
   --desktop: 48em;
   --mobile: 26em;
   --header-height: 3rem;
+
+  /* Animation */
+  --delta: 700ms;
+  --effect: cubic-bezier(0.19, 1, 0.22, 1);
+
   /* Other */
   font-size: 100%;
 }
@@ -107,19 +112,11 @@ body {
   height: 100vh;
   text-rendering: optimizeLegibility;
 }
+
 #root {
-  width: 100%;
-  height: 100%;
-  background-color: var(--white);
-  place-self: center;
   padding: var(--padding);
-  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.2);
 }
-@media screen and (min-width: 26rem) {
-  #root {
-    border-radius: var(--base-size-x2);
-  }
-}
+
 main {
   display: block;
 }
