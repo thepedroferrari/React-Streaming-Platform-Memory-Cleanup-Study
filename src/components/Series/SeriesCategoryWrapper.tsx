@@ -1,7 +1,11 @@
 import { usePagination } from "hooks"
 import { useLayoutEffect, useState } from "react"
 import InView from "react-intersection-observer"
-import { ViaplayCategoryTitle, ViaplaySeriesPage } from "types/ViaplayApi"
+import {
+  ViaplayBlock,
+  ViaplayCategoryTitle,
+  ViaplaySeriesPage,
+} from "types/ViaplayApi"
 import { fetchViaplayApi } from "utils/fetchViaplayApi"
 import { SeriesCategory } from "./molecules/SeriesCategory"
 
@@ -14,64 +18,91 @@ interface Props {
  * @returns JSX.Element || null
  * @description The wrapper is responsible for organising the logic necessary
  * to its children. Some methods/functions may be passed down or contextualised.
- * Renders the first block of data if available, otherwise returns null.
- * In case we don't know how many blocks are there and we want to render them 
- * all, we should consider it as O(n2). Category is similar but not equal to
- * Genre
+ * Renders the blocks of data if available, otherwise returns null. Blocks
+ * are the number of pages and each block contain 10 pages by default.
+ * The component should only load when the Intersection Observer can see it,
+ * otherwise it should unload from the memory completely saving resources.
  * @fires usePagination
  * @fires useLayoutEffect 
  * @fires useState 
  * @fires fetchViaplayApi
- * @emits O(n)
+ * @emits O(n²)
 
  */
+
 export const SeriesCategoryWrapper = ({ category }: Props) => {
-  const { lastPage, next, page, prev } = usePagination()
-  const [data, setData] = useState<ViaplaySeriesPage>()
+  const { nextPageUrl, lastPage, next, page, prev } = usePagination()
+  const [data, setData] = useState<ViaplaySeriesPage | null>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [, setIsLastInPage] = useState(false)
 
   useLayoutEffect(() => {
     if (!isVisible) return undefined
     const controller = new AbortController()
+    console.log(nextPageUrl.current)
 
     const getData = async () => {
-      const viaplayData = await fetchViaplayApi(controller, category, page)
-      setData(viaplayData)
+      // Should query different parts when I only need update chunks, but
+      // am going to simplify and always get the full page here for the sake of
+      // speed
+      const fetchedData =
+        nextPageUrl.current !== null
+          ? await fetchViaplayApi({
+              controller,
+              url: nextPageUrl.current,
+            })
+          : await fetchViaplayApi({ controller, category, page })
+      // setData(fetchedData)
+
+      setData((prevProps: ViaplaySeriesPage | null) => {
+        if (!prevProps) {
+          return fetchedData as ViaplaySeriesPage
+        }
+        return {
+          ...prevProps,
+          _embedded: {
+            ...prevProps._embedded,
+            "viaplay:blocks": [
+              ...prevProps._embedded["viaplay:blocks"],
+              fetchedData as ViaplayBlock,
+            ],
+          },
+        }
+      })
+
       if (lastPage.current === -1) {
-        lastPage.current = viaplayData._embedded["viaplay:blocks"][0].pageCount
+        lastPage.current = (fetchedData as ViaplaySeriesPage)._embedded[
+          "viaplay:blocks"
+        ][0].pageCount
       }
+      nextPageUrl.current =
+        nextPageUrl.current === null
+          ? (fetchedData as ViaplaySeriesPage)._embedded["viaplay:blocks"][0]
+              ._links.next.href
+          : (fetchedData as ViaplayBlock)._links.next.href
     }
     getData()
 
     return () => {
       controller.abort()
     }
-  }, [isVisible, page, category, lastPage])
-
-  if (!data || data._embedded["viaplay:blocks"].length === 0) return null
-  const block = data._embedded["viaplay:blocks"][0]
+  }, [isVisible, page, category, lastPage, nextPageUrl])
 
   return (
     <InView
       as="section"
-      onChange={(inView, entry) => {
-        console.log("Inview:", category, inView, entry)
+      onChange={(inView) => {
         setIsVisible(inView)
       }}>
-      <h2>{category}</h2>
+      <h1>{category}</h1>
       <button type="button" onClick={prev} value="PREV">
         PREV
       </button>
       <button type="button" onClick={next} value="NEXT">
         NEXT
       </button>
-      <SeriesCategory
-        setIsLastInPage={setIsLastInPage}
-        title={block.title}
-        embedded={block._embedded}
-        key={block.title}
-      />
+      {data?._embedded["viaplay:blocks"] && (
+        <SeriesCategory blocks={data._embedded["viaplay:blocks"]} next={next} />
+      )}
     </InView>
   )
 }
