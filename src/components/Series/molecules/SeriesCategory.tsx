@@ -1,5 +1,6 @@
 import { ViaplayBlock } from "types/ViaplayApi"
 import { SerieGrid } from "../atoms"
+import { EmptySeriesCategory } from "./EmptySeriesCategory"
 import { SeriesBlocks } from "./SeriesBlocks"
 
 interface Props {
@@ -8,7 +9,9 @@ interface Props {
 }
 export const SeriesCategory = ({ blocks, next }: Props) => {
   // We only want to render the block if there is data to be rendered
-  if (blocks === undefined || blocks.length === 0) return null
+  if (blocks === undefined || blocks.length === 0) {
+    return <EmptySeriesCategory />
+  }
 
   return (
     <section>

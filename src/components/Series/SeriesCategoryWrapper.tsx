@@ -142,7 +142,6 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
           setData(null)
         }
       }}>
-      <h1>{category}</h1>
       <button type="button" onClick={prev} value="PREV">
         PREV
       </button>

@@ -45,7 +45,7 @@ export const EMPTY_HERO_IMAGE: Hero = {
   template: "",
 }
 export const EMPTY_BOX_IMAGE: Boxart = {
-  url: "",
+  url: "https://i.postimg.cc/CMR29xDT/VIAPLAY.png",
   template: "",
 }
 
