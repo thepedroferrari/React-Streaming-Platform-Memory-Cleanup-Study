@@ -13,7 +13,7 @@ import { useRef, useState } from "react"
 export const usePagination = () => {
   const [page, setPage] = useState(1)
   const lastPage = useRef(-1)
-  const nextPageUrl = useRef<string | null>(null)
+  const nextPageUrl = useRef<string | null | undefined>(undefined)
 
   const next = () =>
     setPage((prevState) =>
