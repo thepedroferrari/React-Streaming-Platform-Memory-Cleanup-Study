@@ -65,10 +65,10 @@ export async function fetchViaplayApi({
   } catch (error) {
     // Send to DataDog or similar
     if (!controller.signal.aborted) {
+      // eslint-disable-next-line no-console
+      console.error("Error:", error)
       throw new Error("Error fetching the API while not aborted")
     }
-    // eslint-disable-next-line no-console
-    console.error("Error:", error)
     return Promise.reject(error)
   }
 }
