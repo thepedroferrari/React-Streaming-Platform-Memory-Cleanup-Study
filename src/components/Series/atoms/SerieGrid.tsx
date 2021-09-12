@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
-export const SerieGrid = styled.div`
+export const SerieGrid = styled.ul`
+  list-style: none;
   display: grid;
   max-width: calc(100vw - var(--gutter) * 2);
   grid-auto-flow: column;
@@ -14,8 +15,8 @@ export const SerieGrid = styled.div`
 
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  margin-bottom: var(--base-size);
-  padding-bottom: var(--base-size-one-and-half);
+  margin: 0 0 var(--base-size) 0;
+  padding: var(--base-size-one-and-half) 0;
 
   // 2 items on mobile, 3 between mobile and desktop, 4 on desktop
   // On viaplay website this part can be optimized for weird screens sizes and

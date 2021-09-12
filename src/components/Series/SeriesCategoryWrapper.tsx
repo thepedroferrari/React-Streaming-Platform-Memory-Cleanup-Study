@@ -23,16 +23,13 @@ interface Props {
  * The component should only load when the Intersection Observer can see it,
  * otherwise it should unload from the memory completely saving resources.
  * @fires usePagination
- * @fires useLayoutEffect 
- * @fires useState 
+ * @fires useLayoutEffect
+ * @fires useState
  * @fires fetchViaplayApi
  * @emits O(n²)
-
  */
-
 export const SeriesCategoryWrapper = ({ category }: Props) => {
-  const { nextPageUrl, lastPage, next, page, prev, resetPagination } =
-    usePagination()
+  const { nextPageUrl, lastPage, next, page, resetPagination } = usePagination()
   const [data, setData] = useState<ViaplaySeriesPage | null>(null)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -142,13 +139,6 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
           setData(null)
         }
       }}>
-      <button type="button" onClick={prev} value="PREV">
-        PREV
-      </button>
-      <button type="button" onClick={next} value="NEXT">
-        NEXT
-      </button>
-
       <SeriesCategory blocks={data?._embedded["viaplay:blocks"]} next={next} />
     </InView>
   )

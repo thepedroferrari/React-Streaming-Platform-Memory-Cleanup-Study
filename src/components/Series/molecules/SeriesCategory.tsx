@@ -7,6 +7,7 @@ interface Props {
   blocks?: ViaplayBlock[]
   next: () => void
 }
+
 export const SeriesCategory = ({ blocks, next }: Props) => {
   // We only want to render the block if there is data to be rendered
   if (blocks === undefined || blocks.length === 0) {
@@ -14,7 +15,7 @@ export const SeriesCategory = ({ blocks, next }: Props) => {
   }
 
   return (
-    <section>
+    <>
       <header>
         <h2>{blocks[0].title}</h2>
       </header>
@@ -27,6 +28,6 @@ export const SeriesCategory = ({ blocks, next }: Props) => {
           />
         ))}
       </SerieGrid>
-    </section>
+    </>
   )
 }

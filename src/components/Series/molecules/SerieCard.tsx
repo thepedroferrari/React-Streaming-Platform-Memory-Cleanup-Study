@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Content } from "types/ViaplayApi"
 import { SerieCard as Card } from "../atoms"
 
@@ -9,31 +10,32 @@ export const SerieCard = ({
   content: {
     images,
     imdb,
-    originalTitle,
+    // originalTitle,
     // parentalRating,
-    people,
+    // people,
     // production,
     series,
-    synopsis,
+    // synopsis,
   },
 }: Props) => {
+  const [isFocused, setIsFocused] = useState(false)
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+  const handleBlur = () => {
+    setIsFocused(false)
+  }
+
   return (
-    <Card bg={images.landscape.url}>
-      {false && (
-        <div style={{ display: "none" }}>
-          <div>Title: {originalTitle}</div>
-          <div>Series: {series.title}</div>
+    <Card bg={images.landscape.url} onFocus={handleFocus} onBlur={handleBlur}>
+      {isFocused && (
+        <footer>
           <div>
-            Synopsis: <p>{synopsis}</p>
+            {series.seasons} Season{series.seasons > 1 && "s"}
           </div>
-          <div>
-            Actors:{" "}
-            {people?.actors?.map((a, i) =>
-              i === people?.actors?.length ? a : `${a}, `,
-            )}
-          </div>
+
           <div>IMDB: {imdb?.rating}</div>
-        </div>
+        </footer>
       )}
     </Card>
   )

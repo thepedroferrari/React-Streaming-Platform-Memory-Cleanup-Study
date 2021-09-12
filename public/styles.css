@@ -93,7 +93,6 @@ h2 + p,
 h3 + p {
   margin-top: var(--margin);
 }
-li + li,
 dl + dd,
 dd + dt,
 dt + dd,

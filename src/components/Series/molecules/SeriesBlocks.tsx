@@ -35,14 +35,14 @@ export const SeriesBlocks = ({ embedded, loadNext }: Props) => {
   if (!embedded?.["viaplay:products"]) return null
 
   const blocks = embedded["viaplay:products"].map((product, productIdx) => {
-    const { content, publicPath } = product
+    const { content } = product
     const isLastInBlock = (productIdx + 1) % ITEMS_PER_PAGE === 0
 
     return isLastInBlock ? (
       <InView
-        as="webview"
+        as="li"
         triggerOnce
-        key={publicPath + product.content.synopsis}
+        key={`${content.images.landscape.url}_${content.parentalRating}`}
         onChange={(inview) => {
           if (inview) {
             loadNext()
@@ -51,7 +51,9 @@ export const SeriesBlocks = ({ embedded, loadNext }: Props) => {
         <SerieCard content={content} />
       </InView>
     ) : (
-      <SerieCard key={publicPath} content={content} /> || null
+      <li key={`${content.images.landscape.url}_${content.parentalRating}`}>
+        {<SerieCard content={content} /> || null}
+      </li>
     )
   })
 
