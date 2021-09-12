@@ -129,6 +129,14 @@ h2 {
   font-size: var(--h2);
   margin: calc(var(--h2) / 3) 0;
 }
+
+@media screen and (max-width: 26.1em) {
+  :root {
+    --h1: 1.25em;
+    --h2: 1.05em;
+    --h3: 1em;
+  }
+}
 h3 {
   font-size: var(--h3);
   margin: calc(var(--h3) / 3) 0;
