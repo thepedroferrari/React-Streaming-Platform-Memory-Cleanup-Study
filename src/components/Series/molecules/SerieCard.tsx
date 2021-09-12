@@ -1,4 +1,5 @@
 import { Content } from "types/ViaplayApi"
+import { SerieCard as Card } from "../atoms"
 
 interface Props {
   content: Content
@@ -17,22 +18,23 @@ export const SerieCard = ({
   },
 }: Props) => {
   return (
-    <>
-      <img src={images.landscape.url} alt="Box Poster" loading="lazy" />
-      <div style={{ display: "none" }}>
-        <div>Title: {originalTitle}</div>
-        <div>Series: {series.title}</div>
-        <div>
-          Synopsis: <p>{synopsis}</p>
+    <Card bg={images.landscape.url}>
+      {false && (
+        <div style={{ display: "none" }}>
+          <div>Title: {originalTitle}</div>
+          <div>Series: {series.title}</div>
+          <div>
+            Synopsis: <p>{synopsis}</p>
+          </div>
+          <div>
+            Actors:{" "}
+            {people?.actors?.map((a, i) =>
+              i === people?.actors?.length ? a : `${a}, `,
+            )}
+          </div>
+          <div>IMDB: {imdb?.rating}</div>
         </div>
-        <div>
-          Actors:{" "}
-          {people?.actors?.map((a, i) =>
-            i === people?.actors?.length ? a : `${a}, `,
-          )}
-        </div>
-        <div>IMDB: {imdb?.rating}</div>
-      </div>
-    </>
+      )}
+    </Card>
   )
 }

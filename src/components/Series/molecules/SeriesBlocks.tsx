@@ -40,6 +40,7 @@ export const SeriesBlocks = ({ embedded, loadNext }: Props) => {
 
     return isLastInBlock ? (
       <InView
+        as="webview"
         triggerOnce
         key={publicPath + product.content.synopsis}
         onChange={(inview) => {

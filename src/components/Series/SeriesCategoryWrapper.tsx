@@ -73,7 +73,6 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
     const getData = async () => {
       /* eslint-disable no-nested-ternary */
       try {
-        console.log(nextPageUrl.current)
         const fetchedData =
           nextPageUrl.current === undefined
             ? await fetchViaplayApi({ controller, category, page })
@@ -115,6 +114,10 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
           null
       } catch (error) {
         if (!controller.signal.aborted) {
+          if (!window.navigator.onLine) {
+            // Connection lost, notify the user or handle with available resources
+            return
+          }
           // eslint-disable-next-line no-console
           console.error("Error:", error)
           throw new Error("Error fetching the API while not aborted")

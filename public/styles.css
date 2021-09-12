@@ -32,6 +32,7 @@
   --base-size: 8px;
   --base-size-half: calc(var(--base-size) / 2);
   --base-size-quarter: calc(var(--base-size) / 4);
+  --base-size-one-and-half: calc(var(--base-size) * 1.5);
   --base-size-x2: calc(var(--base-size) * 2);
   --base-size-x3: calc(var(--base-size) * 3);
   --base-size-x4: calc(var(--base-size) * 4);
@@ -39,6 +40,7 @@
   --base-size-x6: calc(var(--base-size) * 6);
   --base-size-x8: calc(var(--base-size) * 8);
   --base-size-x10: calc(var(--base-size) * 10);
+  --gutter: var(--base-size-x2);
   --smallText: 0.8em;
 
   /* Elevation */
@@ -110,7 +112,7 @@ body {
   display: grid;
   grid-template-rows: 1fr;
   height: 100vh;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizeSpeed;
 }
 
 #root {
