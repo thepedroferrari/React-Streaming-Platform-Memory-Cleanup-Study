@@ -7,7 +7,11 @@ const emptyBlock = Array.from(Array(4))
     ...EMPTY_SERIE_CARD,
     parentalRating: i.toString(),
   }))
-  .map((item) => <SerieCard key={item.parentalRating} content={item} />)
+  .map((item) => (
+    <li key={item.parentalRating}>
+      <SerieCard content={item} />
+    </li>
+  ))
 
 export const EmptySeriesCategory = () => (
   <>
