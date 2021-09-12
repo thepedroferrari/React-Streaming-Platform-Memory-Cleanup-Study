@@ -40,7 +40,8 @@ export const SeriesBlocks = ({ embedded, loadNext }: Props) => {
 
     return isLastInBlock ? (
       <InView
-        key={publicPath}
+        triggerOnce
+        key={publicPath + product.content.synopsis}
         onChange={(inview) => {
           if (inview) {
             loadNext()
