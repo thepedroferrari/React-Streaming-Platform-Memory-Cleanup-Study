@@ -31,7 +31,8 @@ interface Props {
  */
 
 export const SeriesCategoryWrapper = ({ category }: Props) => {
-  const { nextPageUrl, lastPage, next, page, prev } = usePagination()
+  const { nextPageUrl, lastPage, next, page, prev, resetPagination } =
+    usePagination()
   const [data, setData] = useState<ViaplaySeriesPage | null>(null)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -132,6 +133,11 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
       as="section"
       onChange={(inView) => {
         setIsVisible(inView)
+        if (!inView && data !== null) {
+          // Reset component so it leaves the memory
+          resetPagination()
+          setData(null)
+        }
       }}>
       <h1>{category}</h1>
       <button type="button" onClick={prev} value="PREV">

@@ -29,9 +29,27 @@ export const usePagination = () => {
         : lastPage.current,
     )
 
+  const resetPagination = () => {
+    lastPage.current = -1
+    nextPageUrl.current = undefined
+    // We are always adding data afterwards in the list, so we must always
+    // load the first page. We should instead detect the order of the
+    // linked list by currentPage and add the block to the correct place
+    // in the array. When that is ready, we won't need to reset the page
+    setPage(-1)
+  }
+
   const updateLastPage = (pageCount: number) => {
     lastPage.current = pageCount
   }
 
-  return { nextPageUrl, lastPage, next, page, prev, updateLastPage }
+  return {
+    nextPageUrl,
+    lastPage,
+    next,
+    page,
+    prev,
+    resetPagination,
+    updateLastPage,
+  }
 }
