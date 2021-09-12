@@ -32,7 +32,7 @@ interface Props {
  */
 export const SeriesBlocks = ({ embedded, loadNext }: Props) => {
   // We only want to render the block if there is data to be rendered
-  if (embedded?.["viaplay:products"].length === 0) return null
+  if (!embedded?.["viaplay:products"]) return null
 
   const blocks = embedded["viaplay:products"].map((product, productIdx) => {
     const { content, publicPath } = product

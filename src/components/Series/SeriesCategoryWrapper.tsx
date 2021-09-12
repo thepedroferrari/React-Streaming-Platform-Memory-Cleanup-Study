@@ -72,6 +72,7 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
     const getData = async () => {
       /* eslint-disable no-nested-ternary */
       try {
+        console.log(nextPageUrl.current)
         const fetchedData =
           nextPageUrl.current === undefined
             ? await fetchViaplayApi({ controller, category, page })
@@ -105,11 +106,12 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
             "viaplay:blocks"
           ][0].pageCount
         }
+
         nextPageUrl.current =
-          nextPageUrl.current === null
-            ? (fetchedData as ViaplaySeriesPage)._embedded["viaplay:blocks"][0]
-                ._links.next?.href || null
-            : (fetchedData as ViaplayBlock)._links.next?.href || null
+          (fetchedData as ViaplaySeriesPage)?._embedded?.["viaplay:blocks"]?.[0]
+            ._links?.next?.href ||
+          (fetchedData as ViaplayBlock)?._links?.next?.href ||
+          null
       } catch (error) {
         if (!controller.signal.aborted) {
           // eslint-disable-next-line no-console
@@ -138,9 +140,8 @@ export const SeriesCategoryWrapper = ({ category }: Props) => {
       <button type="button" onClick={next} value="NEXT">
         NEXT
       </button>
-      {data?._embedded["viaplay:blocks"] && (
-        <SeriesCategory blocks={data._embedded["viaplay:blocks"]} next={next} />
-      )}
+
+      <SeriesCategory blocks={data?._embedded["viaplay:blocks"]} next={next} />
     </InView>
   )
 }
